@@ -1,7 +1,6 @@
-import styles from './wordle_helper.module.css';
+import React from "react";
+import styles from "./wordle_helper.module.css";
 
-export const WordleHelper = () => {
-  return (
-    <div></div>
-  );
-}
+export const WordleHelper = React.memo(() => {
+  return <div></div>;
+});

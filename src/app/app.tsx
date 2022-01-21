@@ -1,12 +1,15 @@
-import styles from './app.module.css';
-import { Header } from '../header/header.tsx';
-import { WordleHelper } from '../wordle_helper/wordle_helper.tsx';
+import styles from "./app.module.css";
+import { Header } from "../header/header";
+import { WordleHelper } from "../wordle_helper/wordle_helper";
+import { RootProvider } from "../context/root_context";
 
 export const App = () => {
   return (
-    <div className={styles.app}>
-      <Header/>
-      <WordleHelper/>
-    </div>
+    <RootProvider>
+      <div className={styles.app}>
+        <Header />
+        <WordleHelper />
+      </div>
+    </RootProvider>
   );
-}
+};
