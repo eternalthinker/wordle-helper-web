@@ -1,2 +1,10 @@
-.dummy {
+.wordLine {
+  display: flex;
+  gap: 10px;
+}
+
+.wordGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
