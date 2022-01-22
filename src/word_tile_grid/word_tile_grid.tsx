@@ -9,7 +9,7 @@ const WordTileLine = React.memo(
     return (
       <div className={styles.wordLine}>
         {wordLine.word.map((letter, i) => (
-          <Tile letter={letter} row={lineIndex} col={i} />
+          <Tile letter={letter} row={lineIndex} col={i} key={i} />
         ))}
       </div>
     );
@@ -23,7 +23,7 @@ export const WordTileGrid = React.memo(() => {
   return (
     <div className={styles.wordGrid}>
       {wordle.wordLines.map((wordLine, i) => (
-        <WordTileLine wordLine={wordLine} lineIndex={i} />
+        <WordTileLine wordLine={wordLine} lineIndex={i} key={i} />
       ))}
     </div>
   );

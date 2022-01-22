@@ -1,4 +1,4 @@
-type LetterStatus = "correct" | "misplaced" | "absent" | "input";
+export type LetterStatus = "correct" | "misplaced" | "absent" | "input";
 
 export type Letter = {
   letter?: string;
