@@ -2,26 +2,28 @@ import React from "react";
 import styles from "./word_tile_grid.module.css";
 import { RootContext } from "../context/root_context";
 import { Tile } from "../tile/tile";
-import { Word } from "../reducer/root_reducer";
+import { WordLine } from "../reducer/root_reducer";
 
-const WordLine = React.memo(({ word }: { word: Word }) => {
-  return (
-    <div className={styles.wordLine}>
-      {word.map((letter) => (
-        <Tile letter={letter} />
-      ))}
-    </div>
-  );
-});
+const WordTileLine = React.memo(
+  ({ wordLine, lineIndex }: { wordLine: WordLine; lineIndex: number }) => {
+    return (
+      <div className={styles.wordLine}>
+        {wordLine.word.map((letter, i) => (
+          <Tile letter={letter} row={lineIndex} col={i} />
+        ))}
+      </div>
+    );
+  }
+);
 
 export const WordTileGrid = React.memo(() => {
   const { state } = React.useContext(RootContext);
-  const { words } = state;
+  const { wordle } = state;
 
   return (
     <div className={styles.wordGrid}>
-      {words.map((word) => (
-        <WordLine word={word} />
+      {wordle.wordLines.map((wordLine, i) => (
+        <WordTileLine wordLine={wordLine} lineIndex={i} />
       ))}
     </div>
   );

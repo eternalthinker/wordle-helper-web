@@ -1,14 +1,24 @@
-type LetterStatus = "correct" | "misplaced" | "absent";
+type LetterStatus = "correct" | "misplaced" | "absent" | "input";
 
 export type Letter = {
   letter?: string;
   status: LetterStatus;
 };
 
-export type Word = [Letter, Letter, Letter, Letter, Letter];
+export type Word = Letter[];
+
+export type WordLineStatus = "completed" | "input";
+
+export type WordLine = {
+  word: Word;
+  status: WordLineStatus;
+};
 
 export type RootState = {
-  words: [Word, Word, Word, Word, Word, Word];
+  wordle: {
+    wordLines: WordLine[];
+    currentInputLine: number;
+  };
   constraints: {
     excludedLetters: [];
     includedLetters: [];
@@ -16,8 +26,8 @@ export type RootState = {
     letterCounts: [];
   };
   suggestedWords: {
-    allWords: [];
-    displayedWords: [];
+    allWords: string[];
+    displayedWords: string[];
   };
 };
 
@@ -41,17 +51,16 @@ export const rootReducer = (state: RootState, action: Action) => {
   }
 };
 
-const initLetter: Letter = { letter: "", status: "absent" };
-const initWord: Word = [
-  initLetter,
-  initLetter,
-  initLetter,
-  initLetter,
-  initLetter,
-];
+const initWord: WordLine = {
+  word: new Array(5).fill({ letter: undefined, status: "input" }),
+  status: "input",
+};
 
 export const initialState: RootState = {
-  words: [initWord, initWord, initWord, initWord, initWord, initWord],
+  wordle: {
+    wordLines: [initWord],
+    currentInputLine: 0,
+  },
   constraints: {
     excludedLetters: [],
     includedLetters: [],
