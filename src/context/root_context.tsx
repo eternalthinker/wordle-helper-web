@@ -1,7 +1,7 @@
 import React from "react";
 import { rootReducer, initialState, Action } from "../reducer/root_reducer";
 
-type DispatchType = React.Dispatch<Action>;
+export type DispatchType = React.Dispatch<Action>;
 
 export const RootContext = React.createContext({
   state: initialState,

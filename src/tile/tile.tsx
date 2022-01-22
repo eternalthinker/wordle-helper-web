@@ -19,44 +19,50 @@ const getNextStatus = (status: LetterStatus): LetterStatus => {
   }
 };
 
-export const Tile = React.memo(
-  ({ letter, row, col }: { letter: Letter; row: number; col: number }) => {
-    const { dispatch } = React.useContext(RootContext);
+export const Tile = ({
+  letter,
+  row,
+  col,
+}: {
+  letter: Letter;
+  row: number;
+  col: number;
+}) => {
+  const { dispatch } = React.useContext(RootContext);
 
-    const onStatusChanged = React.useCallback(() => {
-      dispatch({
-        type: "letter_status",
-        payload: {
-          lineIndex: row,
-          letterIndex: col,
-          status: getNextStatus(letter.status),
-        },
-      });
-    }, [letter.status]);
-
-    const onClick: MouseEventHandler<HTMLDivElement> = React.useCallback(
-      (e) => {
-        e.preventDefault();
-        if (letter.status !== "input") {
-          onStatusChanged();
-        }
+  const onStatusChanged = React.useCallback(() => {
+    dispatch({
+      type: "letter_status",
+      payload: {
+        lineIndex: row,
+        letterIndex: col,
+        status: getNextStatus(letter.status),
       },
-      [onStatusChanged]
-    );
+    });
+  }, [letter.status]);
 
-    return (
-      <div
-        className={classnames(styles.tile, {
-          [styles.input]: letter.status === "input",
-          [styles.filled]: letter.letter != null,
-          [styles.absent]: letter.status === "absent",
-          [styles.misplaced]: letter.status === "misplaced",
-          [styles.absent]: letter.status === "absent",
-        })}
-        onClick={onClick}
-      >
-        {letter.letter}
-      </div>
-    );
-  }
-);
+  const onClick: MouseEventHandler<HTMLDivElement> = React.useCallback(
+    (e) => {
+      e.preventDefault();
+      if (letter.status !== "input") {
+        onStatusChanged();
+      }
+    },
+    [onStatusChanged]
+  );
+
+  return (
+    <div
+      className={classnames(styles.tile, {
+        [styles.input]: letter.status === "input",
+        [styles.filled]: letter.letter != null,
+        [styles.absent]: letter.status === "absent",
+        [styles.misplaced]: letter.status === "misplaced",
+        [styles.absent]: letter.status === "absent",
+      })}
+      onClick={onClick}
+    >
+      {letter.letter}
+    </div>
+  );
+};
