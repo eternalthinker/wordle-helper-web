@@ -31,6 +31,9 @@ export const Tile = ({
   const { dispatch } = React.useContext(RootContext);
 
   const onStatusChanged = React.useCallback(() => {
+    if (letter.status === "input") {
+      return;
+    }
     dispatch({
       type: "letter_status",
       payload: {
@@ -44,9 +47,7 @@ export const Tile = ({
   const onClick: MouseEventHandler<HTMLDivElement> = React.useCallback(
     (e) => {
       e.preventDefault();
-      if (letter.status !== "input") {
-        onStatusChanged();
-      }
+      onStatusChanged();
     },
     [onStatusChanged]
   );
@@ -58,7 +59,7 @@ export const Tile = ({
         [styles.filled]: letter.letter != null,
         [styles.absent]: letter.status === "absent",
         [styles.misplaced]: letter.status === "misplaced",
-        [styles.absent]: letter.status === "absent",
+        [styles.correct]: letter.status === "correct",
       })}
       onClick={onClick}
     >

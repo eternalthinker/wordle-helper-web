@@ -58,9 +58,33 @@ export const rootReducer = (state: RootState, action: Action): RootState => {
   switch (action.type) {
     case "letter_status": {
       const { lineIndex, letterIndex, status } = action.payload;
-      const tile = state.wordle.wordLines[lineIndex].word[letterIndex];
-      tile.status = status;
-      return state;
+      const wordle = state.wordle;
+      if (wordle.currentInputLine === 6 || wordle.currentInputLetter === 4) {
+        return state;
+      }
+      const currentWordLine = wordle.wordLines[lineIndex];
+
+      return {
+        ...state,
+        wordle: {
+          ...wordle,
+          wordLines: [
+            ...wordle.wordLines.slice(0, lineIndex),
+            {
+              ...currentWordLine,
+              word: [
+                ...currentWordLine.word.slice(0, letterIndex),
+                {
+                  ...currentWordLine.word[letterIndex],
+                  status,
+                },
+                ...currentWordLine.word.slice(letterIndex + 1),
+              ],
+            },
+            ...wordle.wordLines.slice(lineIndex + 1),
+          ],
+        },
+      };
     }
     case "letter_input": {
       const wordle = state.wordle;
@@ -156,7 +180,7 @@ export const rootReducer = (state: RootState, action: Action): RootState => {
   }
 };
 
-const initWord: WordLine = {
+export const initWord: WordLine = {
   word: new Array(5).fill({ letter: undefined, status: "input" }),
   status: "input",
 };
