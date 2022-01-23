@@ -42,7 +42,6 @@ export const WordTileGrid = () => {
 const getHandleKeyBoard = (dispatch: DispatchType) => {
   const handleKeyBoard = (e: KeyboardEvent) => {
     const key = e.key;
-    console.log("got key:", key);
 
     if (/^[a-z]$/i.test(key)) {
       // Enter letter into next available tile

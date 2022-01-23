@@ -54,7 +54,7 @@ export type Action =
       type: "word_enter";
     };
 
-export const rootReducer = (state: RootState, action: Action) => {
+export const rootReducer = (state: RootState, action: Action): RootState => {
   switch (action.type) {
     case "letter_status": {
       const { lineIndex, letterIndex, status } = action.payload;
@@ -63,23 +63,13 @@ export const rootReducer = (state: RootState, action: Action) => {
       return state;
     }
     case "letter_input": {
-      console.log("here - INPUT");
       const wordle = state.wordle;
-
-      if (wordle.currentInputLine == 6 || wordle.currentInputLetter === 5) {
+      if (wordle.currentInputLine === 6 || wordle.currentInputLetter === 4) {
         return state;
       }
-
       const letterIndex = wordle.currentInputLetter + 1;
       const wordIndex = wordle.currentInputLine;
       const currentWordLine = wordle.wordLines[wordIndex];
-
-      // wordle.currentInputLetter += 1;
-      // wordle.wordLines[wordle.currentInputLine].word[
-      //   wordle.currentInputLetter
-      // ].letter = action.payload.letter;
-      // console.log(wordle.currentInputLetter, state.wordle);
-      // return state;
 
       return {
         ...state,
@@ -99,7 +89,6 @@ export const rootReducer = (state: RootState, action: Action) => {
                 ...currentWordLine.word.slice(letterIndex + 1),
               ],
             },
-            ...wordle.wordLines.slice(wordIndex + 1),
           ],
         },
       };
@@ -107,26 +96,59 @@ export const rootReducer = (state: RootState, action: Action) => {
     case "letter_delete": {
       const wordle = state.wordle;
       const { currentInputLine, currentInputLetter } = wordle;
-      if (currentInputLine == 6 || currentInputLetter === -1) {
+      if (currentInputLine === 6 || currentInputLetter === -1) {
         return state;
       }
-      wordle.wordLines[currentInputLine].word[currentInputLetter].letter =
-        undefined;
-      wordle.currentInputLetter -= 1;
-      return state;
+      const currentWordLine = wordle.wordLines[currentInputLine];
+
+      return {
+        ...state,
+        wordle: {
+          ...wordle,
+          currentInputLetter: currentInputLetter - 1,
+          wordLines: [
+            ...wordle.wordLines.slice(0, currentInputLine),
+            {
+              ...currentWordLine,
+              word: [
+                ...currentWordLine.word.slice(0, currentInputLetter),
+                {
+                  ...currentWordLine.word[currentInputLetter],
+                  letter: undefined,
+                },
+                ...currentWordLine.word.slice(currentInputLetter + 1),
+              ],
+            },
+          ],
+        },
+      };
     }
     case "word_enter": {
       const wordle = state.wordle;
       const { currentInputLine, currentInputLetter } = wordle;
-      if (currentInputLine == null || currentInputLetter !== 5) {
+      if (currentInputLine === 6 || currentInputLetter !== 4) {
         return state;
       }
-      wordle.wordLines[currentInputLine].word.forEach((letter) => {
-        letter.status = "absent";
-      });
-      wordle.currentInputLine += 1;
-      wordle.currentInputLetter = -1;
-      return state;
+
+      return {
+        ...state,
+        wordle: {
+          ...wordle,
+          currentInputLine: currentInputLine + 1,
+          currentInputLetter: -1,
+          wordLines: [
+            ...wordle.wordLines.slice(0, currentInputLine),
+            {
+              status: "completed",
+              word: wordle.wordLines[currentInputLine].word.map((letter) => ({
+                ...letter,
+                status: "absent",
+              })),
+            },
+            ...(currentInputLine === 5 ? [] : [initWord]),
+          ],
+        },
+      };
     }
     default: {
       return state;
