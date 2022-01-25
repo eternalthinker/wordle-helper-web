@@ -2,22 +2,7 @@ import React, { MouseEventHandler } from "react";
 import styles from "./tile.module.css";
 import classnames from "classnames";
 import { RootContext } from "../context/root_context";
-import { LetterStatus, Letter } from "../reducer/root_state";
-
-const getNextStatus = (status: LetterStatus): LetterStatus => {
-  switch (status) {
-    case "input":
-      return "input";
-    case "absent":
-      return "misplaced";
-    case "misplaced":
-      return "correct";
-    case "correct":
-      return "absent";
-    default:
-      throw new Error(`Invalid Letter status: ${status}`);
-  }
-};
+import { Letter } from "../reducer/root_state";
 
 export const Tile = ({
   letter,
@@ -35,11 +20,10 @@ export const Tile = ({
       return;
     }
     dispatch({
-      type: "letter_status",
+      type: "letter_status_change",
       payload: {
         lineIndex: row,
         letterIndex: col,
-        status: getNextStatus(letter.status),
       },
     });
   }, [letter.status, row, col, dispatch]);

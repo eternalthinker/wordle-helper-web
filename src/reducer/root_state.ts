@@ -21,10 +21,10 @@ export type RootState = {
     currentInputLetter: number;
   };
   constraints: {
-    excludedLetters: [];
-    includedLetters: [];
-    incorrectPositions: [];
-    letterCounts: [];
+    excludedLetters: Set<string>;
+    includedLetters: Set<string>;
+    incorrectPositions: Set<string>[];
+    correctPositions: (string | undefined)[];
   };
   suggestedWords: {
     allWords: string[];
@@ -44,10 +44,10 @@ export const initialState: RootState = {
     currentInputLetter: -1,
   },
   constraints: {
-    excludedLetters: [],
-    includedLetters: [],
-    incorrectPositions: [],
-    letterCounts: [],
+    excludedLetters: new Set<string>(),
+    includedLetters: new Set<string>(),
+    incorrectPositions: Array(5).fill(new Set<string>()),
+    correctPositions: Array(5).fill(undefined),
   },
   suggestedWords: {
     allWords: [],
@@ -57,11 +57,10 @@ export const initialState: RootState = {
 
 export type Action =
   | {
-      type: "letter_status";
+      type: "letter_status_change";
       payload: {
         lineIndex: number;
         letterIndex: number;
-        status: LetterStatus;
       };
     }
   | {
@@ -76,4 +75,3 @@ export type Action =
   | {
       type: "word_enter";
     };
-    
