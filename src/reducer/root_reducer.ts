@@ -1,9 +1,18 @@
-import { RootState, Action, initWord, LetterStatus } from "./root_state";
+import { wordList } from "../utils/wordlist";
+import { getConstraints } from "./get_constraints";
+import { getSuggestedWords } from "./get_suggested_words";
+import {
+  RootState,
+  Action,
+  initWord,
+  LetterStatus,
+  WordLine,
+} from "./root_state";
 
-const getNextStatus = (status: LetterStatus): LetterStatus => {
+const getNextStatus = (
+  status: Exclude<LetterStatus, "input">
+): Exclude<LetterStatus, "input"> => {
   switch (status) {
-    case "input":
-      return "input";
     case "absent":
       return "misplaced";
     case "misplaced":
@@ -24,28 +33,45 @@ export const rootReducer = (state: RootState, action: Action): RootState => {
         return state;
       }
       const currentWordLine = wordle.wordLines[lineIndex];
-      const newStatus = getNextStatus(currentWordLine.word[letterIndex].status);
+      const newStatus = getNextStatus(
+        currentWordLine.word[letterIndex].status as Exclude<
+          LetterStatus,
+          "input"
+        >
+      );
+
+      const wordLines = [
+        ...wordle.wordLines.slice(0, lineIndex),
+        {
+          ...currentWordLine,
+          word: [
+            ...currentWordLine.word.slice(0, letterIndex),
+            {
+              ...currentWordLine.word[letterIndex],
+              status: newStatus,
+            },
+            ...currentWordLine.word.slice(letterIndex + 1),
+          ],
+        },
+        ...wordle.wordLines.slice(lineIndex + 1),
+      ];
+
+      const constraints = getConstraints(wordLines);
+
+      const suggestedWords = getSuggestedWords(
+        wordList,
+        constraints,
+        wordle.currentInputLine
+      );
 
       return {
         ...state,
         wordle: {
           ...wordle,
-          wordLines: [
-            ...wordle.wordLines.slice(0, lineIndex),
-            {
-              ...currentWordLine,
-              word: [
-                ...currentWordLine.word.slice(0, letterIndex),
-                {
-                  ...currentWordLine.word[letterIndex],
-                  status: newStatus,
-                },
-                ...currentWordLine.word.slice(letterIndex + 1),
-              ],
-            },
-            ...wordle.wordLines.slice(lineIndex + 1),
-          ],
+          wordLines,
         },
+        constraints,
+        suggestedWords,
       };
     }
     case "letter_input": {
@@ -116,24 +142,36 @@ export const rootReducer = (state: RootState, action: Action): RootState => {
         return state;
       }
 
+      const wordLines: WordLine[] = [
+        ...wordle.wordLines.slice(0, currentInputLine),
+        {
+          status: "completed",
+          word: wordle.wordLines[currentInputLine].word.map((letter) => ({
+            ...letter,
+            status: "absent",
+          })),
+        },
+        ...(currentInputLine === 5 ? [] : [initWord]),
+      ];
+
+      const constraints = getConstraints(wordLines);
+
+      const suggestedWords = getSuggestedWords(
+        wordList,
+        constraints,
+        wordle.currentInputLine
+      );
+
       return {
         ...state,
         wordle: {
           ...wordle,
           currentInputLine: currentInputLine + 1,
           currentInputLetter: -1,
-          wordLines: [
-            ...wordle.wordLines.slice(0, currentInputLine),
-            {
-              status: "completed",
-              word: wordle.wordLines[currentInputLine].word.map((letter) => ({
-                ...letter,
-                status: "absent",
-              })),
-            },
-            ...(currentInputLine === 5 ? [] : [initWord]),
-          ],
+          wordLines,
         },
+        constraints,
+        suggestedWords,
       };
     }
     default: {

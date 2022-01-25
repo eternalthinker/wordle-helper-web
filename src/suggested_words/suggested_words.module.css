@@ -1,0 +1,11 @@
+.suggestedWordsContainer {
+  display: flex;
+}
+
+ul.suggestedWordsList {
+  list-style: none;
+}
+
+.suggestedWord {
+  text-transform: uppercase;
+}

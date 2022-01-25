@@ -1,4 +1,5 @@
 import { wordList } from "../utils/wordlist";
+import { getSuggestedWords } from "./get_suggested_words";
 
 export type LetterStatus = "correct" | "misplaced" | "absent" | "input";
 
@@ -16,18 +17,20 @@ export type WordLine = {
   status: WordLineStatus;
 };
 
+export type Constraints = {
+  excludedLetters: Set<string>;
+  includedLetters: Set<string>;
+  incorrectPositions: Set<string>[];
+  correctPositions: (string | undefined)[];
+};
+
 export type RootState = {
   wordle: {
     wordLines: WordLine[];
     currentInputLine: number;
     currentInputLetter: number;
   };
-  constraints: {
-    excludedLetters: Set<string>;
-    includedLetters: Set<string>;
-    incorrectPositions: Set<string>[];
-    correctPositions: (string | undefined)[];
-  };
+  constraints: Constraints;
   suggestedWords: {
     allWords: string[];
     displayedWords: string[];
@@ -41,22 +44,25 @@ export const initWord: WordLine = {
   status: "input",
 };
 
+export const createInitConstraints = () => ({
+  excludedLetters: new Set<string>(),
+  includedLetters: new Set<string>(),
+  incorrectPositions: Array(5)
+    .fill(null)
+    .map((_) => new Set<string>()),
+  correctPositions: Array(5).fill(undefined),
+});
+
+const initConstraints = createInitConstraints();
+
 export const initialState: RootState = {
   wordle: {
     wordLines: [initWord],
     currentInputLine: 0,
     currentInputLetter: -1,
   },
-  constraints: {
-    excludedLetters: new Set<string>(),
-    includedLetters: new Set<string>(),
-    incorrectPositions: Array(5).fill(new Set<string>()),
-    correctPositions: Array(5).fill(undefined),
-  },
-  suggestedWords: {
-    allWords: wordList,
-    displayedWords: wordList.slice(0, MAX_SUGGESTED_WORDS),
-  },
+  constraints: initConstraints,
+  suggestedWords: getSuggestedWords(wordList, initConstraints, 0),
 };
 
 export type Action =

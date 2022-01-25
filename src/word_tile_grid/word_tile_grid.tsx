@@ -19,6 +19,7 @@ const WordTileLine = ({
     </div>
   );
 };
+
 export const WordTileGrid = () => {
   const { state, dispatch } = React.useContext(RootContext);
   const { wordle } = state;
