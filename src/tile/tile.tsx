@@ -1,8 +1,8 @@
 import React, { MouseEventHandler } from "react";
-import { Letter, LetterStatus } from "../reducer/root_reducer";
 import styles from "./tile.module.css";
 import classnames from "classnames";
 import { RootContext } from "../context/root_context";
+import { LetterStatus, Letter } from "../reducer/root_state";
 
 const getNextStatus = (status: LetterStatus): LetterStatus => {
   switch (status) {
@@ -42,7 +42,7 @@ export const Tile = ({
         status: getNextStatus(letter.status),
       },
     });
-  }, [letter.status]);
+  }, [letter.status, row, col, dispatch]);
 
   const onClick: MouseEventHandler<HTMLDivElement> = React.useCallback(
     (e) => {

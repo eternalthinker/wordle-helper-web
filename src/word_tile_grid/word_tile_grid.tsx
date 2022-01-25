@@ -1,8 +1,8 @@
-import React, { KeyboardEventHandler } from "react";
+import React from "react";
 import styles from "./word_tile_grid.module.css";
 import { DispatchType, RootContext } from "../context/root_context";
 import { Tile } from "../tile/tile";
-import { WordLine } from "../reducer/root_reducer";
+import { WordLine } from "../reducer/root_state";
 
 const WordTileLine = ({
   wordLine,
@@ -28,7 +28,7 @@ export const WordTileGrid = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyBoard);
     };
-  }, []);
+  }, [handleKeyBoard]);
 
   return (
     <div tabIndex={-1} className={styles.wordGrid}>

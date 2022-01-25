@@ -1,5 +1,6 @@
 import React from "react";
-import { rootReducer, initialState, Action } from "../reducer/root_reducer";
+import { rootReducer } from "../reducer/root_reducer";
+import { Action, initialState } from "../reducer/root_state";
 
 export type DispatchType = React.Dispatch<Action>;
 
