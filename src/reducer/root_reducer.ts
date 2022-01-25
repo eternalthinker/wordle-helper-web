@@ -1,9 +1,7 @@
 import { RootState, Action, initWord, LetterStatus } from "./root_state";
 
-const getNextStatus = (state: RootState, lineIndex: number, letterIndex: number): LetterStatus => {
-  const letter = state.wordle.wordLines[lineIndex].word[letterIndex];
-  const currentStatus = letter.status;
-  switch (currentStatus) {
+const getNextStatus = (status: LetterStatus): LetterStatus => {
+  switch (status) {
     case "input":
       return "input";
     case "absent":
@@ -13,7 +11,7 @@ const getNextStatus = (state: RootState, lineIndex: number, letterIndex: number)
     case "correct":
       return "absent";
     default:
-      throw new Error(`Invalid Letter status: ${currentStatus}`);
+      throw new Error(`Invalid Letter status: ${status}`);
   }
 };
 
@@ -21,12 +19,12 @@ export const rootReducer = (state: RootState, action: Action): RootState => {
   switch (action.type) {
     case "letter_status_change": {
       const { lineIndex, letterIndex } = action.payload;
-      const newStatus = getNextStatus(state, lineIndex, letterIndex);
       const wordle = state.wordle;
       if (wordle.currentInputLine === 6 || wordle.currentInputLetter === 4) {
         return state;
       }
       const currentWordLine = wordle.wordLines[lineIndex];
+      const newStatus = getNextStatus(currentWordLine.word[letterIndex].status);
 
       return {
         ...state,

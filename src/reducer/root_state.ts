@@ -1,3 +1,5 @@
+import { wordList } from "../utils/wordlist";
+
 export type LetterStatus = "correct" | "misplaced" | "absent" | "input";
 
 export type Letter = {
@@ -32,6 +34,8 @@ export type RootState = {
   };
 };
 
+export const MAX_SUGGESTED_WORDS = 25;
+
 export const initWord: WordLine = {
   word: new Array(5).fill({ letter: undefined, status: "input" }),
   status: "input",
@@ -50,8 +54,8 @@ export const initialState: RootState = {
     correctPositions: Array(5).fill(undefined),
   },
   suggestedWords: {
-    allWords: [],
-    displayedWords: [],
+    allWords: wordList,
+    displayedWords: wordList.slice(0, MAX_SUGGESTED_WORDS),
   },
 };
 
