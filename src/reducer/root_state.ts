@@ -24,11 +24,14 @@ export type Constraints = {
   correctPositions: (string | undefined)[];
 };
 
+export type GameState = "inprogress" | "success" | "fail";
+
 export type RootState = {
   wordle: {
     wordLines: WordLine[];
     currentInputLine: number;
     currentInputLetter: number;
+    gameState: GameState;
   };
   constraints: Constraints;
   suggestedWords: {
@@ -60,6 +63,7 @@ export const initialState: RootState = {
     wordLines: [initWord],
     currentInputLine: 0,
     currentInputLetter: -1,
+    gameState: "inprogress",
   },
   constraints: initConstraints,
   suggestedWords: getSuggestedWords(wordList, initConstraints, 0),
