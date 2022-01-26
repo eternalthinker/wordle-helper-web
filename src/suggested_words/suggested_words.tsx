@@ -9,6 +9,7 @@ export const SuggestedWords = () => {
 
   return (
     <div className={styles.suggestedWordsContainer}>
+      <h2>Suggested Words</h2>
       <ul className={styles.suggestedWordsList}>
         {displayedWords.map((word, index) => (
           <li className={styles.suggestedWord} key={index}>

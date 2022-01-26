@@ -8,3 +8,7 @@
   flex-direction: column;
   gap: 10px;
 }
+
+.wordGrid:focus {
+  outline: none;
+}

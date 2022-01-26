@@ -25,9 +25,9 @@ export const WordTileGrid = () => {
   const { wordle } = state;
   const handleKeyBoard = React.useCallback(getHandleKeyBoard(dispatch), []);
   React.useEffect(() => {
-    document.addEventListener("keydown", handleKeyBoard);
+    document.addEventListener("keyup", handleKeyBoard);
     return () => {
-      document.removeEventListener("keydown", handleKeyBoard);
+      document.removeEventListener("keyup", handleKeyBoard);
     };
   }, [handleKeyBoard]);
 

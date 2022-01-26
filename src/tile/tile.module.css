@@ -1,9 +1,9 @@
 .tile {
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   border-radius: 3px;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,7 +17,7 @@
 
 .input {
   background-color: #fff;
-  border: 2px solid #666;
+  border: 2px solid rgb(180, 180, 180);
   color: black;
 }
 
@@ -27,19 +27,19 @@
 
 .absent {
   background-color: rgb(117, 117, 117);
-  border: 2px solid rgb(92, 92, 92);
+  border: none;
   color: #eee;
 }
 
 .misplaced {
   background-color: rgb(180, 149, 8);
-  border: 2px solid #333;
+  border: none;
   color: white;
 }
 
 .correct {
   background-color: rgb(55, 184, 4);
-  border: 2px solid #333;
+  border: none;
   color: white;
 }
 

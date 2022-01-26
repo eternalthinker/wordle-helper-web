@@ -1,9 +1,9 @@
-import styles from './header.module.css';
+import styles from "./header.module.css";
 
 export const Header = () => {
   return (
     <header className={styles.header}>
-      Wordle Helper
+      <h1>Wordle Helper</h1>
     </header>
   );
-}
+};

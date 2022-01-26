@@ -6,6 +6,7 @@ export const WordleHelper = () => {
   return (
     <div className={styles.wordleHelper}>
       <WordTileGrid />
+      <div className={styles.divider} />
       <SuggestedWords />
     </div>
   );
