@@ -2,6 +2,17 @@
   width: 64px;
   height: 64px;
   border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  transition: transform 0.25s ease-in-out;
+}
+
+.tile:not(.input):hover {
+  transform: scale(1.1);
 }
 
 .input {
@@ -15,19 +26,19 @@
 }
 
 .absent {
-  background-color: #999;
-  border: 2px solid #666;
+  background-color: rgb(117, 117, 117);
+  border: 2px solid rgb(92, 92, 92);
   color: #eee;
 }
 
 .misplaced {
-  background-color: rgb(250, 225, 4);
+  background-color: rgb(180, 149, 8);
   border: 2px solid #333;
   color: white;
 }
 
 .correct {
-  background-color: rgb(58, 194, 5);
+  background-color: rgb(55, 184, 4);
   border: 2px solid #333;
   color: white;
 }
