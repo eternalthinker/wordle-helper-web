@@ -75,7 +75,7 @@ export const getSuggestedWords = (
   constraints: Constraints,
   currentInputLine: number
 ) => {
-  const allWords: string[] = [];
+  let allWords: string[] = [];
   for (let i = 0; i < wordList.length; ++i) {
     const word = wordList[i];
     let skipWord = false;
@@ -98,6 +98,13 @@ export const getSuggestedWords = (
         skipWord = true;
         break;
       }
+      if (
+        constraints.correctPositions[j] != null &&
+        letter !== constraints.correctPositions[j]
+      ) {
+        skipWord = true;
+        break;
+      }
     }
     if (skipWord) {
       continue;
@@ -106,16 +113,15 @@ export const getSuggestedWords = (
     allWords.push(word);
   }
 
-  let displayedWords = allWords.slice(0, MAX_SUGGESTED_WORDS);
   if (currentInputLine < 3) {
-    // Stable sort displayedWords
-    displayedWords = stableSort(displayedWords, (a, b) => {
+    allWords = stableSort(allWords, (a, b) => {
       return (
         getCommonLetterScore(b, constraints.excludedLetters) -
         getCommonLetterScore(a, constraints.excludedLetters)
       );
     });
   }
+  let displayedWords = allWords.slice(0, MAX_SUGGESTED_WORDS);
 
   return {
     allWords,
