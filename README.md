@@ -1,4 +1,5 @@
 ## TODO
 
--[ ] Disable tile focus outlines while typing  
+-[ ] Apply existing hints on new word  
+-[ ] Help screen  
 -[ ] Virtual keyboard

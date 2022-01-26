@@ -37,7 +37,7 @@ export type RootState = {
   };
 };
 
-export const MAX_SUGGESTED_WORDS = 25;
+export const MAX_SUGGESTED_WORDS = 10;
 
 export const initWord: WordLine = {
   word: new Array(5).fill({ letter: undefined, status: "input" }),

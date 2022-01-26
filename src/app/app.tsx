@@ -6,9 +6,11 @@ import { RootProvider } from "../context/root_context";
 export const App = () => {
   return (
     <RootProvider>
-      <div className={styles.app}>
-        <Header />
-        <WordleHelper />
+      <div className={styles.appContainer}>
+        <div className={styles.app}>
+          <Header />
+          <WordleHelper />
+        </div>
       </div>
     </RootProvider>
   );
