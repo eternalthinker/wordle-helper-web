@@ -1,5 +1,6 @@
 import { wordList } from "../utils/wordlist";
 import { getConstraints } from "./get_constraints";
+import { getLetterStatus } from "./get_letter_status";
 import { getSuggestedWords } from "./get_suggested_words";
 import {
   RootState,
@@ -146,9 +147,9 @@ export const rootReducer = (state: RootState, action: Action): RootState => {
         ...wordle.wordLines.slice(0, currentInputLine),
         {
           status: "completed",
-          word: wordle.wordLines[currentInputLine].word.map((letter) => ({
+          word: wordle.wordLines[currentInputLine].word.map((letter, i) => ({
             ...letter,
-            status: "absent",
+            status: getLetterStatus(letter.letter!, i, state.constraints),
           })),
         },
         ...(currentInputLine === 5 ? [] : [initWord]),

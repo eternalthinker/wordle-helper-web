@@ -1,4 +1,4 @@
-import { Constraints, MAX_SUGGESTED_WORDS, Word } from "./root_state";
+import { Constraints, MAX_SUGGESTED_WORDS } from "./root_state";
 
 const commonLettersMap: Record<string, number> = {
   e: 11.16,
@@ -20,14 +20,6 @@ const getCommonLetterScore = (
   excludedLetters: Set<string>
 ): number => {
   let score = 0;
-  // Push plurals down to the bottom
-  if (word[word.length - 1] === "s") {
-    return score;
-  }
-  // Push possible past tense to the bottom
-  if (word[word.length - 2] === "e" && word[word.length - 1] === "d") {
-    return score;
-  }
   const wordSet = new Set<string>(word.split(""));
   wordSet.forEach((letter) => {
     if (excludedLetters.has(letter)) {
@@ -38,6 +30,18 @@ const getCommonLetterScore = (
     }
   });
   return score;
+};
+
+const getWordTypeScore = (word: string) => {
+  // Push plurals down to the bottom
+  if (word[word.length - 1] === "s") {
+    return 0;
+  }
+  // Push possible past tense to the bottom
+  if (word[word.length - 2] === "e" && word[word.length - 1] === "d") {
+    return 0;
+  }
+  return 1;
 };
 
 const intersection = (s1: Set<string>, s2: Set<string>) => {
@@ -121,6 +125,9 @@ export const getSuggestedWords = (
       );
     });
   }
+  allWords = stableSort(allWords, (a, b) => {
+    return getWordTypeScore(b) - getWordTypeScore(a);
+  });
   let displayedWords = allWords.slice(0, MAX_SUGGESTED_WORDS);
 
   return {
