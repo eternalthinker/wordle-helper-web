@@ -1,0 +1,18 @@
+.virtualKeyboard {
+  height: 200px;
+  background-color: #eee;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.keyboardRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-grow: 1;
+}
