@@ -26,6 +26,8 @@ export type Constraints = {
 
 export type GameState = "inprogress" | "success" | "fail";
 
+export type Theme = "light" | "dark" | "adaptive";
+
 export type RootState = {
   wordle: {
     wordLines: WordLine[];
@@ -38,6 +40,7 @@ export type RootState = {
     allWords: string[];
     displayedWords: string[];
   };
+  theme: Theme;
 };
 
 export const MAX_SUGGESTED_WORDS = 10;
@@ -58,15 +61,18 @@ export const createInitConstraints = () => ({
 
 const initConstraints = createInitConstraints();
 
-export const initialState: RootState = {
-  wordle: {
-    wordLines: [initWord],
-    currentInputLine: 0,
-    currentInputLetter: -1,
-    gameState: "inprogress",
-  },
-  constraints: initConstraints,
-  suggestedWords: getSuggestedWords(wordList, initConstraints, 0),
+export const createInitialState = ({ theme }: { theme: Theme }): RootState => {
+  return {
+    wordle: {
+      wordLines: [initWord],
+      currentInputLine: 0,
+      currentInputLetter: -1,
+      gameState: "inprogress",
+    },
+    constraints: initConstraints,
+    suggestedWords: getSuggestedWords(wordList, initConstraints, 0),
+    theme,
+  };
 };
 
 export type Action =
@@ -88,4 +94,10 @@ export type Action =
     }
   | {
       type: "word_enter";
+    }
+  | {
+      type: "theme_change";
+      payload: {
+        theme: Theme;
+      };
     };
