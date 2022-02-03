@@ -1,7 +1,7 @@
 .keyboardKey {
   border-radius: 3px;
-  background-color: #ddd;
-  color: #000;
+  background-color: var(--secondary);
+  color: var(--secondary-fore);
   font-size: 1em;
   cursor: pointer;
   width: 100%;
@@ -19,18 +19,18 @@
 }
 
 .absent {
-  background-color: rgb(117, 117, 117);
-  color: #eee;
+  background-color: var(--absent);
+  color: var(--absent-fore);
 }
 
 .misplaced {
-  background-color: rgb(180, 149, 8);
-  color: #eee;
+  background-color: var(--misplaced);
+  color: var(--misplaced-fore);
 }
 
 .correct {
-  background-color: rgb(55, 184, 4);
-  color: #eee;
+  background-color: var(--correct);
+  color: var(--correct-fore);
 }
 
 .fontSmall {

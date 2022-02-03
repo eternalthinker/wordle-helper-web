@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--border-low);
   margin-bottom: 16px;
   padding: 8px 0px;
   position: relative;
@@ -16,9 +16,9 @@
   margin: 8px 0px;
 }
 
-.helpButton {
-  color: #aaa;
-  border: 2px solid #aaa;
+.button {
+  color: var(--typography-secondary);
+  border: 2px solid var(--typography-secondary);
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -30,11 +30,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.button:hover {
+  color: var(--typography-secondary-hover);
+  border: 2px solid var(--typography-secondary-hover);
+}
+
+.helpButton {
+  composes: button;
   position: absolute;
   left: 8px;
 }
 
-.helpButton:hover {
-  color: #444;
-  border: 2px solid #444;
+.settingsButton {
+  composes: button;
+  padding-bottom: 3px;
+  position: absolute;
+  right: 8px;
 }

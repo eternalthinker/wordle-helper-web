@@ -13,7 +13,7 @@
 }
 
 .divider {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--border-low);
   width: 100%;
   margin: 8px 0px;
 }

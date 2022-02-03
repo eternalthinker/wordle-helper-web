@@ -1,9 +1,0 @@
-:root {
-  --typography-primary: #000;
-  --background-1: #fff;
-}
-
-[data-theme="dark"] {
-  --typography-primary: #fff;
-  --background-1: rgb(44, 44, 44);
-}

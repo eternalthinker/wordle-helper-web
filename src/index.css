@@ -19,10 +19,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
+  user-select: none;
 }
 
 #root {
   height: 100%;
+}
+
+a {
+  color: var(--link);
 }
 
 code {

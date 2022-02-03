@@ -1,3 +1,4 @@
+import { LocalStorage } from "../utils/local_storage";
 import { wordList } from "../utils/wordlist";
 import { getConstraints } from "./get_constraints";
 import { getLetterStatus } from "./get_letter_status";
@@ -173,6 +174,13 @@ export const rootReducer = (state: RootState, action: Action): RootState => {
         },
         constraints,
         suggestedWords,
+      };
+    }
+    case "theme_change": {
+      LocalStorage.setItem("theme", action.payload.theme);
+      return {
+        ...state,
+        theme: action.payload.theme,
       };
     }
     default: {

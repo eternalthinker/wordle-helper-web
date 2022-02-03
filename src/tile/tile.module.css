@@ -33,31 +33,31 @@
 }
 
 .input {
-  background-color: #fff;
-  border: 2px solid rgb(180, 180, 180);
-  color: black;
+  background-color: var(--input);
+  border: 2px solid var(--input-border-low);
+  color: var(--input-fore);
 }
 
 .input.filled {
-  border: 2px solid #333;
+  border: 2px solid var(--input-border);
 }
 
 .absent {
-  background-color: rgb(117, 117, 117);
+  background-color: var(--absent);
+  color: var(--absent-fore);
   border: none;
-  color: #eee;
 }
 
 .misplaced {
-  background-color: rgb(180, 149, 8);
+  background-color: var(--misplaced);
+  color: var(--misplaced-fore);
   border: none;
-  color: white;
 }
 
 .correct {
-  background-color: rgb(55, 184, 4);
+  background-color: var(--correct);
+  color: var(--correct-fore);
   border: none;
-  color: white;
 }
 
 .absent,
