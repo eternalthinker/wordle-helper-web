@@ -5,7 +5,7 @@ import styles from "./virtual_keyboard.module.css";
 
 const keyboardLayout = [
   ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
-  ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+  ["spacer", "a", "s", "d", "f", "g", "h", "j", "k", "l", "spacer"],
   ["enter", "z", "x", "c", "v", "b", "n", "m", "backspace"],
 ];
 
@@ -14,7 +14,12 @@ const renderKey = (
   index: number,
   dispatch: DispatchType
 ) => {
+  if (keyString === "spacer") {
+    return <Spacer />;
+  }
   let onClick: () => void = () => null;
+  let displayString = keyString;
+  let fontSize: "regular" | "small" = "regular";
   if (/^[a-z]$/i.test(keyString)) {
     // Enter letter into next available tile
     onClick = () =>
@@ -28,16 +33,27 @@ const renderKey = (
       dispatch({
         type: "word_enter",
       });
+    fontSize = "small";
   } else if (keyString === "backspace") {
     // Clear last input tile
     onClick = () =>
       dispatch({
         type: "letter_delete",
       });
+    displayString = "⌫";
   }
   return (
-    <KeyboardKey key={index} displayString={keyString} onClick={onClick} />
+    <KeyboardKey
+      key={index}
+      displayString={displayString}
+      onClick={onClick}
+      fontSize={fontSize}
+    />
   );
+};
+
+const Spacer = () => {
+  return <div className={styles.spacer} />;
 };
 
 export const VirtualKeyboard = () => {

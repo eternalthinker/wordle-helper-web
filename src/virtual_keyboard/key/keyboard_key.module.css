@@ -1,24 +1,30 @@
 .keyboardKey {
   padding: 10px 10px;
   border-radius: 3px;
-  background-color: #aaa;
-  color: #fff;
-  display: block;
+  background-color: #ddd;
+  color: #000;
   margin: 0px 5px;
   font-size: 1em;
   cursor: pointer;
   width: 100%;
-  height: 100%;
+  height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0%;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: none;
+  font-size: 1em;
+  appearance: auto;
 }
 
 .keyboardKey:hover {
   background-color: #888;
 }
 
-.displayString {
-  text-transform: uppercase;
-  font-weight: bold;
+.fontSmall {
+  font-size: 0.8em;
 }
