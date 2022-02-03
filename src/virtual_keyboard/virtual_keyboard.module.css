@@ -2,14 +2,16 @@
   height: 200px;
   background-color: #efefef;
   width: 100%;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   margin: 0px 8px;
 }
 
 .keyboardRow {
   width: 100%;
   display: flex;
-  margin-bottom: 8px;
+  gap: 8px;
 }
 
 .spacer {
