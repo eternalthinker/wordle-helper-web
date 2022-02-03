@@ -20,9 +20,11 @@ export const getConstraints = (wordLines: WordLine[]): Constraints => {
       if (letter.status === "correct") {
         constraints.correctPositions[i] = letter.letter;
         constraints.includedLetters.add(letter.letter);
+        constraints.excludedLetters.delete(letter.letter);
       } else if (letter.status === "misplaced") {
         constraints.incorrectPositions[i].add(letter.letter);
         constraints.includedLetters.add(letter.letter);
+        constraints.excludedLetters.delete(letter.letter);
       } else if (letter.status === "absent") {
         if (constraints.includedLetters.has(letter.letter)) {
           constraints.incorrectPositions[i].add(letter.letter);

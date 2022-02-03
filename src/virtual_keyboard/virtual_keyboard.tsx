@@ -1,6 +1,7 @@
 import React from "react";
 import { DispatchType, RootContext } from "../context/root_context";
-import { KeyboardKey } from "./key/keyboard_key";
+import { Constraints } from "../reducer/root_state";
+import { KeyboardKey, KeyboardKeyStatus } from "./key/keyboard_key";
 import styles from "./virtual_keyboard.module.css";
 
 const keyboardLayout = [
@@ -12,14 +13,16 @@ const keyboardLayout = [
 const renderKey = (
   keyString: string,
   index: number,
-  dispatch: DispatchType
+  dispatch: DispatchType,
+  constraints: Constraints,
 ) => {
   if (keyString === "spacer") {
-    return <Spacer />;
+    return <Spacer key={index} />;
   }
   let onClick: () => void = () => null;
   let displayString = keyString;
   let fontSize: "regular" | "small" = "regular";
+  let status: KeyboardKeyStatus = "regular";
   if (/^[a-z]$/i.test(keyString)) {
     // Enter letter into next available tile
     onClick = () =>
@@ -27,6 +30,13 @@ const renderKey = (
         type: "letter_input",
         payload: { letter: keyString },
       });
+    if (constraints.excludedLetters.has(keyString)) {
+      status = "absent";
+    } else if (constraints.correctPositions.includes(keyString)) {
+      status = "correct";
+    } else if (constraints.includedLetters.has(keyString)) {
+      status = "misplaced";
+    }
   } else if (keyString === "enter") {
     // Commit current line
     onClick = () =>
@@ -48,6 +58,7 @@ const renderKey = (
       displayString={displayString}
       onClick={onClick}
       fontSize={fontSize}
+      status={status}
     />
   );
 };
@@ -57,13 +68,14 @@ const Spacer = () => {
 };
 
 export const VirtualKeyboard = () => {
-  const { dispatch } = React.useContext(RootContext);
+  const { state, dispatch } = React.useContext(RootContext);
+  const { constraints } = state;
 
   return (
     <div className={styles.virtualKeyboard}>
       {keyboardLayout.map((row, rowIdx) => (
         <div className={styles.keyboardRow} key={rowIdx}>
-          {row.map((keyString, i) => renderKey(keyString, i, dispatch))}
+          {row.map((keyString, i) => renderKey(keyString, i, dispatch, constraints))}
         </div>
       ))}
     </div>

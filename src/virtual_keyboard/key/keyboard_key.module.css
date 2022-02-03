@@ -18,8 +18,19 @@
   padding: 0px;
 }
 
-.keyboardKey:hover {
-  background-color: #888;
+.absent {
+  background-color: rgb(117, 117, 117);
+  color: #eee;
+}
+
+.misplaced {
+  background-color: rgb(180, 149, 8);
+  color: #eee;
+}
+
+.correct {
+  background-color: rgb(55, 184, 4);
+  color: #eee;
 }
 
 .fontSmall {
