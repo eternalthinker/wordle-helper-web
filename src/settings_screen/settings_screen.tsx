@@ -13,9 +13,8 @@ export const SettingsScreen = ({
   const { theme } = state;
   const onToggleDarkMode = React.useCallback((enableDarkMode: boolean) => {
     const theme: Theme = enableDarkMode ? "dark" : "light";
-    console.log("toggled:", enableDarkMode);
     dispatch({ type: "theme_change", payload: { theme } });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={styles.settingsScreen}>

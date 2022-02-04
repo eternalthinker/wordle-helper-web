@@ -27,6 +27,7 @@
   cursor: pointer;
   font-weight: 600;
   font-size: 1em;
+  padding: 0.5em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,7 +46,6 @@
 
 .settingsButton {
   composes: button;
-  padding-bottom: 3px;
   position: absolute;
   right: 8px;
 }

@@ -12,8 +12,9 @@
   --primary: #226d9e;
   --primary-fore: #eee;
   --secondary: #ddd;
-  --tertiary: #b9b9b9;
   --secondary-fore: #000;
+  --tertiary: #b9b9b9;
+  --tertiary-fore: #fcfcfc;
   --absent: rgb(117, 117, 117);
   --absent-fore: #eee;
   --misplaced: #c2b910;
@@ -25,7 +26,7 @@
 
 [data-theme="dark"] {
   --typography-primary: #fff;
-  --typography-secondary: rgb(218, 218, 218);
+  --typography-secondary: rgb(204, 204, 204);
   --typography-secondary-hover: rgb(235, 235, 235);
   --background-1: rgb(29, 29, 29);
   --background-2: rgb(49, 49, 49);
@@ -37,13 +38,14 @@
   --primary: #4180a9;
   --primary-fore: #eee;
   --secondary: rgb(138, 138, 138);
-  --tertiary: rgb(170, 169, 169);
   --secondary-fore: #eee;
+  --tertiary: rgb(170, 169, 169);
+  --tertiary-fore: #fcfcfc;
   --absent: rgb(77, 76, 76);
   --absent-fore: #eee;
   --misplaced: #c2b910;
   --misplaced-fore: #fff;
   --correct: #37b804;
   --correct-fore: #fff;
-  --link: #3873c5;
+  --link: #5a99f1;
 }

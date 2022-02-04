@@ -18,7 +18,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--secondary);
+  background-color: var(--tertiary);
   transition: 0.4s;
   border-radius: 32px;
 }
@@ -30,7 +30,7 @@
   width: 24px;
   left: 4px;
   bottom: 4px;
-  background-color: var(--tertiary);
+  background-color: var(--tertiary-fore);
   transition: 0.4s;
   border-radius: 50%;
 }

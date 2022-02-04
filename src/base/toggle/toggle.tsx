@@ -10,7 +10,6 @@ export const Toggle = ({
 }) => {
   const handleChange = React.useCallback(
     (e) => {
-      e.preventDefault();
       onToggle(e.target.checked);
     },
     [onToggle]
